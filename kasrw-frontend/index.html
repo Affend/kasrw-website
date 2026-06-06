@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kas Digital RW 25</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Variables ─────────────────────────────── */
+    :root {
+      --navy:       #0d2137;
+      --navy-lt:    #153250;
+      --blue:       #1a73e8;
+      --blue-soft:  #e8f0fe;
+      --green:      #0fba6f;
+      --green-dk:   #059954;
+      --red:        #ef4444;
+      --red-soft:   #fee2e2;
+      --red-dk:     #dc2626;
+      --yellow:     #f59e0b;
+      --yellow-soft:#fef3c7;
+      --yellow-dk:  #d97706;
+      --violet:     #7c3aed;
+      --violet-soft:#ede9fe;
+      --violet-dk:  #6d28d9;
+      --cyan:       #06b6d4;
+      --cyan-soft:  #cffafe;
+      --bg:         #eef2f7;
+      --card:       #ffffff;
+      --border:     #e2e8f0;
+      --text:       #1e293b;
+      --muted:      #64748b;
+      --radius:     14px;
+      --shadow:     0 4px 24px rgba(13,33,55,.10);
+    }
+
+    /* ── Reset ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-lt) 100%);
+      padding: 0 0 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content:''; position:absolute; top:-60px; right:-60px;
+      width:260px; height:260px; border-radius:50%;
+      background:rgba(255,255,255,.04);
+    }
+    header::after {
+      content:''; position:absolute; bottom:-80px; left:40px;
+      width:200px; height:200px; border-radius:50%;
+      background:rgba(255,255,255,.03);
+    }
+
+    .header-top {
+      background: rgba(0,0,0,.18);
+      padding: 10px 32px;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      letter-spacing: .5px;
+    }
+
+    .header-body {
+      padding: 24px 32px 0;
+      display: flex; align-items: center; gap: 18px;
+      position: relative; z-index: 1;
+    }
+
+    .logo-box {
+      width:56px; height:56px;
+      background: linear-gradient(135deg, var(--blue) 0%, #4aaeff 100%);
+      border-radius: 14px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:26px;
+      box-shadow: 0 6px 20px rgba(26,115,232,.4);
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px; color: #fff;
+      letter-spacing: -.3px; line-height: 1.1;
+    }
+
+    header p.subtitle {
+      font-size: 12.5px;
+      color: rgba(255,255,255,.6);
+      margin-top: 3px; font-weight: 500;
+    }
+
+    .stats-bar {
+      display:flex; gap:14px;
+      padding: 20px 32px 0;
+      position: relative; z-index:1;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 50px;
+      padding: 7px 16px;
+      color: #fff; font-size: 12.5px; font-weight: 600;
+      display:flex; align-items:center; gap:6px;
+    }
+
+    /* ── Container ──────────────────────────────── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+    }
+
+    /* ── Card ───────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .card-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      display:flex; align-items:center; gap:10px;
+    }
+
+    .card-icon {
+      width:34px; height:34px;
+      border-radius:9px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px;
+    }
+
+    .card-title {
+      font-size:15px; font-weight:700; color:var(--text);
+    }
+
+    .card-body { padding: 24px; }
+
+    /* ── Form ───────────────────────────────────── */
+    form#form-transaksi {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .fg {
+      display:flex; flex-direction:column; gap:6px;
+    }
+
+    .fg.full { grid-column: 1 / -1; }
+
+    .fg label {
+      font-size:12px; font-weight:700;
+      color:var(--muted); text-transform:uppercase; letter-spacing:.4px;
+    }
+
+    form#form-transaksi input,
+    form#form-transaksi select {
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px; font-weight:500;
+      color: var(--text);
+      background: #f8fafc;
+      outline: none;
+      -webkit-appearance: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+
+    form#form-transaksi input::placeholder { color:#b0bec5; font-weight:400; }
+
+    form#form-transaksi input:focus,
+    form#form-transaksi select:focus {
+      border-color: var(--blue);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(26,115,232,.12);
+    }
+
+    form#form-transaksi select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;
+      background-position: right 12px center;
+      padding-right:36px;
+      cursor:pointer;
+    }
+
+    form#form-transaksi button[type="submit"] {
+      grid-column: 1 / -1;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-dk) 100%);
+      color: #fff;
+      border: none; border-radius: 10px;
+      font-family: inherit; font-size:15px; font-weight:700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(15,186,111,.35);
+      transition: all .2s;
+    }
+
+    form#form-transaksi button[type="submit"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(15,186,111,.45);
+    }
+
+    /* ── Saldo Bar ──────────────────────────────── */
+    .saldo-bar {
+      display:flex; justify-content:space-between; align-items:center;
+      background: linear-gradient(135deg, var(--navy) 0%, #1d4a7a 100%);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .saldo-label {
+      font-size:11px; font-weight:700; text-transform:uppercase;
+      letter-spacing:.6px; color:rgba(255,255,255,.6);
+    }
+
+    .saldo-value {
+      font-family:'Syne', sans-serif;
+      font-size:22px; font-weight:800; color:#fff;
+      margin-top:2px;
+    }
+
+    .saldo-detail {
+      display:flex; gap:14px; margin-top:4px;
+    }
+
+    .saldo-in  { font-size:12px; color:#6ee7b7; font-weight:600; }
+    .saldo-out { font-size:12px; color:#fca5a5; font-weight:600; }
+
+    /* ── Table ──────────────────────────────────── */
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width:100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    thead tr th {
+      background:#f8fafc;
+      color:var(--muted);
+      font-size:11.5px; font-weight:700;
+      text-transform:uppercase; letter-spacing:.5px;
+      padding:12px 16px;
+      border-bottom:2px solid var(--border);
+      text-align:left; white-space:nowrap;
+    }
+
+    tbody tr { transition: background .15s; }
+    tbody tr:hover { background: #f8fafc; }
+
+    tbody td {
+      padding:13px 16px;
+      font-size:13.5px;
+      border-bottom:1px solid var(--border);
+      vertical-align:middle;
+    }
+
+    tbody tr:last-child td { border-bottom:none; }
+
+    /* Jenis Classes (dari script asli) */
+    td.pemasukan  { font-weight:700; }
+    td.pengeluaran { font-weight:700; }
+
+    /* Badge override untuk kolom jenis */
+    .badge {
+      display:inline-flex; align-items:center; gap:5px;
+      padding:4px 11px; border-radius:50px;
+      font-size:12px; font-weight:700; white-space:nowrap;
+    }
+
+    .badge-pemasukan   { background:var(--cyan-soft);  color:#0e7490; }
+    .badge-pengeluaran { background:var(--red-soft);   color:var(--red-dk); }
+
+    .jumlah-plus  { color:var(--green-dk); font-weight:700; }
+    .jumlah-minus { color:var(--red-dk);  font-weight:700; }
+
+    /* ── Action Buttons ─────────────────────────── */
+    .action-cell { display:flex; gap:6px; align-items:center; }
+
+    .btn-detail, .btn-edit-row, .btn-delete {
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:6px 14px;
+      border:none; border-radius:8px;
+      font-family:inherit; font-size:12.5px; font-weight:700;
+      cursor:pointer; transition:all .18s;
+      white-space:nowrap;
+    }
+
+    .btn-detail {
+      background:var(--violet-soft); color:var(--violet-dk);
+    }
+    .btn-detail:hover { background:var(--violet); color:#fff; }
+
+    .btn-edit-row {
+      background:var(--yellow-soft); color:var(--yellow-dk);
+    }
+    .btn-edit-row:hover { background:var(--yellow); color:#fff; }
+
+    .btn-delete {
+      background:var(--red-soft); color:var(--red-dk);
+    }
+    .btn-delete:hover { background:var(--red); color:#fff; }
+
+    /* ── Modal ──────────────────────────────────── */
+    .modal-overlay {
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.45);
+      display:none; align-items:center; justify-content:center;
+      z-index:500; backdrop-filter:blur(3px);
+    }
+    .modal-overlay.open { display:flex; }
+
+    .modal {
+      background:#fff; border-radius:16px;
+      padding:28px; width:100%; max-width:440px;
+      box-shadow:0 20px 60px rgba(0,0,0,.2);
+      animation:modalIn .25s ease;
+    }
+    @keyframes modalIn {
+      from { transform:scale(.94); opacity:0; }
+      to   { transform:scale(1);   opacity:1; }
+    }
+
+    .modal-title {
+      font-family:'Syne', sans-serif;
+      font-size:18px; font-weight:800;
+      color:var(--text); margin-bottom:20px;
+      display:flex; align-items:center; gap:10px;
+    }
+
+    /* Detail list */
+    .detail-list { display:flex; flex-direction:column; gap:12px; }
+
+    .detail-row {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:10px 14px;
+      background:#f8fafc; border-radius:9px;
+      border:1px solid var(--border);
+    }
+
+    .detail-row .dl { font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; }
+    .detail-row .dv { font-size:14px; font-weight:600; color:var(--text); }
+
+    /* Edit modal form */
+    .modal .fg { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+    .modal .fg label { font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; }
+    .modal .fg input,
+    .modal .fg select {
+      padding:10px 13px;
+      border:1.5px solid var(--border); border-radius:9px;
+      font-family:inherit; font-size:14px; font-weight:500;
+      color:var(--text); background:#f8fafc;
+      outline:none; -webkit-appearance:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+    .modal .fg input:focus,
+    .modal .fg select:focus {
+      border-color:var(--blue); background:#fff;
+      box-shadow:0 0 0 3px rgba(26,115,232,.12);
+    }
+    .modal .fg select {
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 12px center;
+      padding-right:36px; cursor:pointer;
+    }
+
+    .modal-actions {
+      display:flex; gap:10px; margin-top:20px; justify-content:flex-end;
+    }
+
+    .btn-modal-cancel {
+      padding:10px 18px;
+      background:var(--bg); color:var(--muted);
+      border:none; border-radius:9px;
+      font-family:inherit; font-size:13px; font-weight:700;
+      cursor:pointer; transition:background .18s;
+    }
+    .btn-modal-cancel:hover { background:var(--border); }
+
+    .btn-modal-save {
+      padding:10px 22px;
+      background:linear-gradient(135deg, var(--blue) 0%, #3b82f6 100%);
+      color:#fff;
+      border:none; border-radius:9px;
+      font-family:inherit; font-size:13px; font-weight:700;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(26,115,232,.3);
+      transition:opacity .18s;
+    }
+    .btn-modal-save:hover { opacity:.9; }
+
+    /* ── Responsive ─────────────────────────────── */
+    @media (max-width:600px) {
+      form#form-transaksi { grid-template-columns:1fr; }
+      .fg.full { grid-column:1; }
+      .header-body { padding:18px 18px 0; }
+      .header-top  { padding:8px 18px; }
+      .stats-bar   { padding:14px 18px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <div class="header-top">🏠 RW 25 &nbsp;·&nbsp; Sistem Informasi Keuangan Warga</div>
+    <div class="header-body">
+      <div class="logo-box">💰</div>
+      <div>
+        <h1>Kas Digital RW 25</h1>
+        <p class="subtitle">Sistem Informasi Pengelolaan Keuangan Warga</p>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-pill">📋 <span id="stat-total">0 Transaksi</span></div>
+      <div class="stat-pill">📅 <span id="stat-date"></span></div>
+    </div>
+  </header>
+
+  <!-- ── Container ── -->
+  <div class="container">
+
+    <!-- Form Tambah -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-soft)">➕</div>
+        <div class="card-title">Tambah Transaksi</div>
+      </div>
+      <div class="card-body">
+        <form id="form-transaksi">
+          <div class="fg">
+            <label>Tanggal</label>
+            <input type="date" id="tanggal" required>
+          </div>
+          <div class="fg">
+            <label>Tipe Transaksi</label>
+            <select id="jenis">
+              <option value="pemasukan">Pemasukan (+)</option>
+              <option value="pengeluaran">Pengeluaran (−)</option>
+            </select>
+          </div>
+          <div class="fg full">
+            <label>Keterangan</label>
+            <input type="text" id="keterangan" placeholder="Contoh: Iuran Wajib April" required>
+          </div>
+          <div class="fg full">
+            <label>Jumlah (Rp)</label>
+            <input type="number" id="jumlah" placeholder="Contoh: 500000" required min="0">
+          </div>
+          <button type="submit">💾 Simpan Transaksi</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tabel -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:#f0fdf4">📒</div>
+        <div class="card-title">Rekapitulasi Transaksi</div>
+      </div>
+      <div class="card-body">
+
+        <!-- Saldo -->
+        <div class="saldo-bar">
+          <div>
+            <div class="saldo-label">Total Saldo</div>
+            <div class="saldo-value" id="total-saldo">Rp 0</div>
+            <div class="saldo-detail">
+              <span class="saldo-in"  id="total-in">↑ Rp 0</span>
+              <span class="saldo-out" id="total-out">↓ Rp 0</span>
+            </div>
+          </div>
+          <div style="font-size:38px;opacity:.25">🏦</div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+                <th>Jenis</th>
+                <th>Jumlah</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-transaksi"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Modal Detail ── -->
+  <div class="modal-overlay" id="modal-detail">
+    <div class="modal">
+      <div class="modal-title">🔍 Detail Transaksi</div>
+      <div class="detail-list">
+        <div class="detail-row"><span class="dl">Tanggal</span>   <span class="dv" id="d-tanggal">-</span></div>
+        <div class="detail-row"><span class="dl">Keterangan</span><span class="dv" id="d-keterangan">-</span></div>
+        <div class="detail-row"><span class="dl">Jenis</span>     <span class="dv" id="d-jenis">-</span></div>
+        <div class="detail-row"><span class="dl">Jumlah</span>    <span class="dv" id="d-jumlah">-</span></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="tutupModal()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Modal Edit ── -->
+  <div class="modal-overlay" id="modal-edit">
+    <div class="modal">
+      <div class="modal-title">✏️ Edit Transaksi</div>
+      <div class="fg">
+        <label>Tanggal</label>
+        <input type="date" id="edit-tanggal">
+      </div>
+      <div class="fg">
+        <label>Tipe Transaksi</label>
+        <select id="edit-jenis">
+          <option value="pemasukan">Pemasukan (+)</option>
+          <option value="pengeluaran">Pengeluaran (−)</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Keterangan</label>
+        <input type="text" id="edit-keterangan" placeholder="Keterangan">
+      </div>
+      <div class="fg">
+        <label>Jumlah (Rp)</label>
+        <input type="number" id="edit-jumlah" placeholder="Jumlah" min="0">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-modal-cancel" onclick="tutupModal()">Batal</button>
+        <button class="btn-modal-save"   onclick="simpanEdit()">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = "http://3.85.57.222:8000";
+
+    function formatRupiah(n){ return "Rp " + Number(n).toLocaleString("id-ID"); }
+
+    async function loadTransaksi() {
+      const res = await fetch(API + "/transaksi");
+      const data = await res.json();
+      const tbody = document.getElementById("tabel-transaksi");
+      tbody.innerHTML = "";
+      data.forEach(function(t) {
+        tbody.innerHTML += `<tr>
+          <td>${t.tanggal}</td>
+          <td>${t.keterangan}</td>
+          <td class="${t.jenis}">${t.jenis}</td>
+          <td>${formatRupiah(t.jumlah)}</td>
+          <td>
+            <div class="action-cell">
+              <button class="btn-detail"   onclick="lihatDetail(${t.id},'${t.tanggal}','${t.keterangan}','${t.jenis}',${t.jumlah})">Detail</button>
+              <button class="btn-edit-row" onclick="editTransaksi(${t.id},'${t.tanggal}','${t.keterangan}','${t.jenis}',${t.jumlah})">Edit</button>
+              <button class="btn-delete"   onclick="hapusTransaksi(${t.id})">Delete</button>
+            </div>
+          </td>
+        </tr>`;
+      });
+      /* update saldo & stats (tambahan UI) */
+      hitungSaldo(data);
+      document.getElementById("stat-total").textContent = data.length + " Transaksi";
+    }
+
+    document.getElementById("form-transaksi").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const body = {
+        tanggal:     document.getElementById("tanggal").value,
+        keterangan:  document.getElementById("keterangan").value,
+        jenis:       document.getElementById("jenis").value,
+        jumlah:      parseFloat(document.getElementById("jumlah").value)
+      };
+      await fetch(API + "/transaksi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      e.target.reset();
+      loadTransaksi();
+    });
+
+    loadTransaksi();
+
+    /* ============================================================
+       TAMBAHAN FITUR — FUNGSI BARU (tidak mengubah fungsi asli)
+    ============================================================ */
+
+    let _editId = null;
+
+    /* Hitung & tampilkan saldo */
+    function hitungSaldo(data) {
+      let totalIn = 0, totalOut = 0;
+      data.forEach(function(t) {
+        if (t.jenis === "pemasukan") totalIn  += Number(t.jumlah);
+        else                         totalOut += Number(t.jumlah);
+      });
+      const saldo = totalIn - totalOut;
+      const elSaldo = document.getElementById("total-saldo");
+      elSaldo.textContent = formatRupiah(saldo);
+      elSaldo.style.color = saldo >= 0 ? "#6ee7b7" : "#fca5a5";
+      document.getElementById("total-in").textContent  = "↑ " + formatRupiah(totalIn);
+      document.getElementById("total-out").textContent = "↓ " + formatRupiah(totalOut);
+    }
+
+    /* Detail — tampilkan modal baca */
+    function lihatDetail(id, tanggal, keterangan, jenis, jumlah) {
+      document.getElementById("d-tanggal").textContent    = tanggal;
+      document.getElementById("d-keterangan").textContent = keterangan;
+      document.getElementById("d-jenis").textContent      = jenis.charAt(0).toUpperCase() + jenis.slice(1);
+      document.getElementById("d-jumlah").textContent     = formatRupiah(jumlah);
+      document.getElementById("modal-detail").classList.add("open");
+    }
+
+    /* Edit — buka modal isi form */
+    function editTransaksi(id, tanggal, keterangan, jenis, jumlah) {
+      _editId = id;
+      document.getElementById("edit-tanggal").value    = tanggal;
+      document.getElementById("edit-keterangan").value = keterangan;
+      document.getElementById("edit-jenis").value      = jenis;
+      document.getElementById("edit-jumlah").value     = jumlah;
+      document.getElementById("modal-edit").classList.add("open");
+    }
+
+    /* Simpan hasil edit */
+    async function simpanEdit() {
+      const body = {
+        tanggal:    document.getElementById("edit-tanggal").value,
+        keterangan: document.getElementById("edit-keterangan").value,
+        jenis:      document.getElementById("edit-jenis").value,
+        jumlah:     parseFloat(document.getElementById("edit-jumlah").value)
+      };
+      await fetch(API + "/transaksi/" + _editId, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      tutupModal();
+      loadTransaksi();
+    }
+
+    /* Delete */
+    async function hapusTransaksi(id) {
+      if (!confirm("Yakin hapus transaksi ini?")) return;
+      await fetch(API + "/transaksi/" + id, { method: "DELETE" });
+      loadTransaksi();
+    }
+
+    /* Tutup semua modal */
+    function tutupModal() {
+      document.getElementById("modal-detail").classList.remove("open");
+      document.getElementById("modal-edit").classList.remove("open");
+      _editId = null;
+    }
+
+    /* Tutup modal klik luar */
+    document.querySelectorAll(".modal-overlay").forEach(function(el) {
+      el.addEventListener("click", function(e) {
+        if (e.target === el) tutupModal();
+      });
+    });
+
+    /* Tanggal header */
+    document.getElementById("stat-date").textContent =
+      new Date().toLocaleDateString("id-ID", { day:"numeric", month:"long", year:"numeric" });
+  </script>
+</body>
+</html>
